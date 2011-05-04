@@ -10,7 +10,7 @@ For models that use this extension, see Code Examples/Sound in the models librar
 
 ## Terms of Use
 
-All contents © 2004-2011 Uri Wilensky.
+All contents Â© 2004-2011 Uri Wilensky.
 
 The contents of this package may be freely copied, distributed, altered, or otherwise used by anyone for any legal purpose.
 
