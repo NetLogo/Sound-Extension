@@ -10,7 +10,7 @@ For models that use this extension, see Code Examples/Sound in the models librar
 
 ## Building
 
-Use the NETLOGO environment variabele to tell the Makefile which NetLogo.jar to compile against.  For example:
+Use the NETLOGO environment variable to tell the Makefile which NetLogo.jar to compile against.  For example:
 
     NETLOGO=/Applications/NetLogo\\\ 5.0beta2 make
 
