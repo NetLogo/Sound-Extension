@@ -13,9 +13,7 @@ endif
 JAVAC=$(JAVA_HOME)/bin/javac
 SRCS=$(wildcard src/*.java)
 
-include config.mk
-
-$(NAME).jar: $(SRCS) manifest.txt Makefile
+sound.jar: $(SRCS) manifest.txt Makefile
 	mkdir -p classes
-	$(JAVAC) -g -deprecation -Xlint:all -Xlint:-serial -Xlint:-path -encoding us-ascii -source 1.5 -target 1.5 -classpath $(NETLOGO)/NetLogo.jar:$(SCALA_JAR):$(JARS) -d classes $(SRCS)
-	jar cmf manifest.txt $(NAME).jar -C classes .
+	$(JAVAC) -g -deprecation -Xlint:all -Xlint:-serial -Xlint:-path -encoding us-ascii -source 1.5 -target 1.5 -classpath $(NETLOGO)/NetLogo.jar:$(SCALA_JAR) -d classes $(SRCS)
+	jar cmf manifest.txt sound.jar -C classes .
