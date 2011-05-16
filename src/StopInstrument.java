@@ -1,38 +1,32 @@
 /** (c) 2004-2011 Uri Wilensky. See README.txt for terms of use. **/
 
-package org.nlogo.extensions.sound ;
+package org.nlogo.extensions.sound;
 
 /**
  * NetLogo command stops all notes played by an instrument.
- **/
+ */
 public class StopInstrument
-    implements org.nlogo.api.Command
-{
-    public String getAgentClassString()
-    {
-        return "OTP" ;
-    }
+    implements org.nlogo.api.Command {
+  public String getAgentClassString() {
+    return "OTP";
+  }
 
-    public org.nlogo.api.Syntax getSyntax()
-    {
-        int[] right = { org.nlogo.api.Syntax.TYPE_STRING } ;
-        return org.nlogo.api.Syntax.commandSyntax( right ) ;
-    }
+  public org.nlogo.api.Syntax getSyntax() {
+    int[] right = {org.nlogo.api.Syntax.TYPE_STRING};
+    return org.nlogo.api.Syntax.commandSyntax(right);
+  }
 
-    public boolean getSwitchesBoolean() 
-    { 
-        return false; 
-    }
+  public boolean getSwitchesBoolean() {
+    return false;
+  }
 
-    public org.nlogo.api.Command newInstance( String name ) 
-    {				
-        return new StopInstrument();
-    }
+  public org.nlogo.api.Command newInstance(String name) {
+    return new StopInstrument();
+  }
 
-    public void perform( org.nlogo.api.Argument args[] , org.nlogo.api.Context context  )
-        throws org.nlogo.api.ExtensionException , org.nlogo.api.LogoException
-    {
-        int instrument = SoundExtension.getInstrument( args[0].getString() );
-        SoundExtension.stopNotes( instrument );
-    }
+  public void perform(org.nlogo.api.Argument args[], org.nlogo.api.Context context)
+      throws org.nlogo.api.ExtensionException, org.nlogo.api.LogoException {
+    int instrument = SoundExtension.getInstrument(args[0].getString());
+    SoundExtension.stopNotes(instrument);
+  }
 }
