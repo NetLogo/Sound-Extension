@@ -16,8 +16,8 @@ public class PlaySoundLater
   public org.nlogo.api.Syntax getSyntax() {
     int[] right =
         {
-            org.nlogo.api.Syntax.TYPE_STRING, // sample URL
-            org.nlogo.api.Syntax.TYPE_NUMBER, // delay
+            org.nlogo.api.Syntax.StringType(), // sample URL
+            org.nlogo.api.Syntax.NumberType(), // delay
         };
     return org.nlogo.api.Syntax.commandSyntax(right);
   }

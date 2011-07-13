@@ -12,7 +12,7 @@ public class StopInstrument
   }
 
   public org.nlogo.api.Syntax getSyntax() {
-    int[] right = {org.nlogo.api.Syntax.TYPE_STRING};
+    int[] right = {org.nlogo.api.Syntax.StringType()};
     return org.nlogo.api.Syntax.commandSyntax(right);
   }
 

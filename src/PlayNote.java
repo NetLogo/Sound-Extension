@@ -14,10 +14,10 @@ public class PlayNote
   public org.nlogo.api.Syntax getSyntax() {
     int[] right =
         {
-            org.nlogo.api.Syntax.TYPE_STRING,
-            org.nlogo.api.Syntax.TYPE_NUMBER,
-            org.nlogo.api.Syntax.TYPE_NUMBER,
-            org.nlogo.api.Syntax.TYPE_NUMBER
+            org.nlogo.api.Syntax.StringType(),
+            org.nlogo.api.Syntax.NumberType(),
+            org.nlogo.api.Syntax.NumberType(),
+            org.nlogo.api.Syntax.NumberType()
         };
     return org.nlogo.api.Syntax.commandSyntax(right);
   }

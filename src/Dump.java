@@ -13,7 +13,7 @@ public class Dump
 
   public org.nlogo.api.Syntax getSyntax() {
     return org.nlogo.api.Syntax.reporterSyntax(
-        org.nlogo.api.Syntax.TYPE_STRING
+        org.nlogo.api.Syntax.StringType()
     );
   }
 

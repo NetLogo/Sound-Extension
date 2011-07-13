@@ -14,11 +14,11 @@ public class PlayNoteLater
   public org.nlogo.api.Syntax getSyntax() {
     int[] right =
         {
-            org.nlogo.api.Syntax.TYPE_NUMBER,  // delay
-            org.nlogo.api.Syntax.TYPE_STRING,  // instrument
-            org.nlogo.api.Syntax.TYPE_NUMBER,  // note
-            org.nlogo.api.Syntax.TYPE_NUMBER,  // velocity
-            org.nlogo.api.Syntax.TYPE_NUMBER   // duration
+            org.nlogo.api.Syntax.NumberType(),  // delay
+            org.nlogo.api.Syntax.StringType(),  // instrument
+            org.nlogo.api.Syntax.NumberType(),  // note
+            org.nlogo.api.Syntax.NumberType(),  // velocity
+            org.nlogo.api.Syntax.NumberType()   // duration
         };
     return org.nlogo.api.Syntax.commandSyntax(right);
   }

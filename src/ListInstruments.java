@@ -14,7 +14,7 @@ public class ListInstruments
   }
 
   public org.nlogo.api.Syntax getSyntax() {
-    return org.nlogo.api.Syntax.reporterSyntax(org.nlogo.api.Syntax.TYPE_LIST);
+    return org.nlogo.api.Syntax.reporterSyntax(org.nlogo.api.Syntax.ListType());
   }
 
   public boolean getSwitchesBoolean() {

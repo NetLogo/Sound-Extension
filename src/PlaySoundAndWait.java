@@ -16,7 +16,7 @@ public class PlaySoundAndWait
   public org.nlogo.api.Syntax getSyntax() {
     int[] right =
         {
-            org.nlogo.api.Syntax.TYPE_STRING,
+            org.nlogo.api.Syntax.StringType(),
         };
     return org.nlogo.api.Syntax.commandSyntax(right);
   }
