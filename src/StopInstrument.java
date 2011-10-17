@@ -1,5 +1,3 @@
-/** (c) 2004-2011 Uri Wilensky. See README.txt for terms of use. **/
-
 package org.nlogo.extensions.sound;
 
 /**
