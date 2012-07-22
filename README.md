@@ -10,9 +10,7 @@ For models that use this extension, see Code Examples/Sound in the models librar
 
 ## Building
 
-Use the NETLOGO environment variable to tell the Makefile which NetLogoLite.jar to compile against.  For example:
-
-    NETLOGO=/Applications/NetLogo\\\ 5.0 make
+Run `make`.
 
 If compilation succeeds, `sound.jar` will be created.
 
