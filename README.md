@@ -10,9 +10,9 @@ For models that use this extension, see Code Examples/Sound in the models librar
 
 ## Building
 
-Use the NETLOGO environment variable to tell the Makefile which NetLogoLite.jar to compile against.  For example:
+Use the netlogo.jar.url environment variable to tell sbt which NetLogo.jar to compile against (defaults to NetLogo 5.3). For example:
 
-    NETLOGO=/Applications/NetLogo\\\ 5.0 make
+    sbt -Dnetlogo.jar.url=file:///path/to/NetLogo/target/NetLogo.jar
 
 If compilation succeeds, `sound.jar` will be created.
 

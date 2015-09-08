@@ -11,7 +11,7 @@ public class SoundExtension extends org.nlogo.api.DefaultClassManager {
    * The drums on the MIDI percussion channel start at 35,
    * so the indexes in this array are off by -35.
    */
-  static final java.util.List DRUM_NAMES = java.util.Arrays.asList(
+  static final java.util.List<String> DRUM_NAMES = java.util.Arrays.asList(
       new String[]
           {
               "ACOUSTIC BASS DRUM", "BASS DRUM 1", "SIDE STICK",
@@ -35,7 +35,7 @@ public class SoundExtension extends org.nlogo.api.DefaultClassManager {
    * index of the instruments in this array should be off by -1. But it seems
    * that it's indexing from zero.
    */
-  static final java.util.List INSTRUMENT_NAMES = java.util.Arrays.asList(
+  static final java.util.List<String> INSTRUMENT_NAMES = java.util.Arrays.asList(
       new String[]{
           "ACOUSTIC GRAND PIANO", "BRIGHT ACOUSTIC PIANO",
           "ELECTRIC GRAND PIANO", "HONKY-TONK PIANO", "ELECTRIC PIANO 1",
