@@ -135,7 +135,9 @@ public class SoundExtension extends org.nlogo.api.DefaultClassManager {
 
       if (soundbank == null) {
         try {
-          soundbank = javax.sound.midi.MidiSystem.getSoundbank(em.getFile("sound/soundbank-min.gm").getInputStream());
+          java.io.InputStream soundbankStream = getClass().getClassLoader().getResourceAsStream("soundbank-min.gm");
+          java.io.BufferedInputStream bufferedSoundbankStream = new java.io.BufferedInputStream(soundbankStream);
+          soundbank = javax.sound.midi.MidiSystem.getSoundbank(bufferedSoundbankStream);
         } catch (java.io.IOException e) {
           throw new org.nlogo.api.ExtensionException("Failed to load soundbank: " + e.toString());
         } catch (javax.sound.midi.InvalidMidiDataException e) {
