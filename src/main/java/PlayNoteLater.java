@@ -9,16 +9,16 @@ public class PlayNoteLater
     return "OTP";
   }
 
-  public org.nlogo.api.Syntax getSyntax() {
+  public org.nlogo.core.Syntax getSyntax() {
     int[] right =
         {
-            org.nlogo.api.Syntax.NumberType(),  // delay
-            org.nlogo.api.Syntax.StringType(),  // instrument
-            org.nlogo.api.Syntax.NumberType(),  // note
-            org.nlogo.api.Syntax.NumberType(),  // velocity
-            org.nlogo.api.Syntax.NumberType()   // duration
+            org.nlogo.core.Syntax.NumberType(),  // delay
+            org.nlogo.core.Syntax.StringType(),  // instrument
+            org.nlogo.core.Syntax.NumberType(),  // note
+            org.nlogo.core.Syntax.NumberType(),  // velocity
+            org.nlogo.core.Syntax.NumberType()   // duration
         };
-    return org.nlogo.api.Syntax.commandSyntax(right);
+    return org.nlogo.core.Syntax.commandSyntax(right);
   }
 
   public boolean getSwitchesBoolean() {

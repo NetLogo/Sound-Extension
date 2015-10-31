@@ -9,8 +9,8 @@ public class StopMusic
     return "OTP";
   }
 
-  public org.nlogo.api.Syntax getSyntax() {
-    return org.nlogo.api.Syntax.commandSyntax();
+  public org.nlogo.core.Syntax getSyntax() {
+    return org.nlogo.core.SyntaxJ.commandSyntax();
   }
 
   public boolean getSwitchesBoolean() {

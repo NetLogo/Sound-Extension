@@ -9,13 +9,13 @@ public class PlayDrum
     return "OTP";
   }
 
-  public org.nlogo.api.Syntax getSyntax() {
+  public org.nlogo.core.Syntax getSyntax() {
     int[] right =
         {
-            org.nlogo.api.Syntax.StringType(),
-            org.nlogo.api.Syntax.NumberType()
+            org.nlogo.core.Syntax.StringType(),
+            org.nlogo.core.Syntax.NumberType()
         };
-    return org.nlogo.api.Syntax.commandSyntax(right);
+    return org.nlogo.core.Syntax.commandSyntax(right);
   }
 
   public boolean getSwitchesBoolean() {

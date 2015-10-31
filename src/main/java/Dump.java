@@ -9,9 +9,9 @@ public class Dump
     return "OTP";
   }
 
-  public org.nlogo.api.Syntax getSyntax() {
-    return org.nlogo.api.Syntax.reporterSyntax(
-        org.nlogo.api.Syntax.StringType()
+  public org.nlogo.core.Syntax getSyntax() {
+    return org.nlogo.core.SyntaxJ.reporterSyntax(
+        org.nlogo.core.Syntax.StringType()
     );
   }
 

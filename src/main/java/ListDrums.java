@@ -1,6 +1,6 @@
 package org.nlogo.extensions.sound;
 
-import org.nlogo.api.LogoList;
+import org.nlogo.core.LogoList;
 
 /**
  * NetLogo command returns the names of all the available drums.
@@ -11,8 +11,8 @@ public class ListDrums
     return "OTP";
   }
 
-  public org.nlogo.api.Syntax getSyntax() {
-    return org.nlogo.api.Syntax.reporterSyntax(org.nlogo.api.Syntax.ListType());
+  public org.nlogo.core.Syntax getSyntax() {
+    return org.nlogo.core.SyntaxJ.reporterSyntax(org.nlogo.core.Syntax.ListType());
   }
 
   public boolean getSwitchesBoolean() {

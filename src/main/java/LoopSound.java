@@ -11,12 +11,12 @@ public class LoopSound
     return "OTP";
   }
 
-  public org.nlogo.api.Syntax getSyntax() {
+  public org.nlogo.core.Syntax getSyntax() {
     int[] right =
         {
-            org.nlogo.api.Syntax.StringType(),
+            org.nlogo.core.Syntax.StringType(),
         };
-    return org.nlogo.api.Syntax.commandSyntax(right);
+    return org.nlogo.core.Syntax.commandSyntax(right);
   }
 
   public boolean getSwitchesBoolean() {

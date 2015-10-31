@@ -9,9 +9,9 @@ public class StopInstrument
     return "OTP";
   }
 
-  public org.nlogo.api.Syntax getSyntax() {
-    int[] right = {org.nlogo.api.Syntax.StringType()};
-    return org.nlogo.api.Syntax.commandSyntax(right);
+  public org.nlogo.core.Syntax getSyntax() {
+    int[] right = {org.nlogo.core.Syntax.StringType()};
+    return org.nlogo.core.Syntax.commandSyntax(right);
   }
 
   public boolean getSwitchesBoolean() {

@@ -11,13 +11,13 @@ public class PlaySoundLater
     return "OTP";
   }
 
-  public org.nlogo.api.Syntax getSyntax() {
+  public org.nlogo.core.Syntax getSyntax() {
     int[] right =
         {
-            org.nlogo.api.Syntax.StringType(), // sample URL
-            org.nlogo.api.Syntax.NumberType(), // delay
+            org.nlogo.core.Syntax.StringType(), // sample URL
+            org.nlogo.core.Syntax.NumberType(), // delay
         };
-    return org.nlogo.api.Syntax.commandSyntax(right);
+    return org.nlogo.core.Syntax.commandSyntax(right);
   }
 
   public boolean getSwitchesBoolean() {
