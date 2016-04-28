@@ -267,7 +267,7 @@ public class SoundExtension extends org.nlogo.api.DefaultClassManager {
         Thread.sleep(delay);
         clip.play();
       } catch (InterruptedException e) {
-        org.nlogo.util.Exceptions.ignore(e);
+        org.nlogo.api.Exceptions.ignore(e);
       }
 
     }
@@ -431,7 +431,7 @@ public class SoundExtension extends org.nlogo.api.DefaultClassManager {
       try {
         Thread.sleep(delay);
       } catch (InterruptedException e) {
-        org.nlogo.util.Exceptions.ignore(e);
+        org.nlogo.api.Exceptions.ignore(e);
       }
       channel.noteOn(note, velocity);
 
@@ -461,7 +461,7 @@ public class SoundExtension extends org.nlogo.api.DefaultClassManager {
       try {
         Thread.sleep(duration);
       } catch (InterruptedException e) {
-        org.nlogo.util.Exceptions.ignore(e);
+        org.nlogo.api.Exceptions.ignore(e);
       }
       channel.noteOff(note);
     }
