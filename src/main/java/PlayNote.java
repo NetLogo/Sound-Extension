@@ -1,5 +1,7 @@
 package org.nlogo.extensions.sound;
 
+import org.nlogo.core.SyntaxJ;
+
 /**
  * NetLogo command plays a note for a specified duration.
  */
@@ -17,7 +19,7 @@ public class PlayNote
             org.nlogo.core.Syntax.NumberType(),
             org.nlogo.core.Syntax.NumberType()
         };
-    return org.nlogo.core.Syntax.commandSyntax(right);
+    return SyntaxJ.commandSyntax(right);
   }
 
   public boolean getSwitchesBoolean() {

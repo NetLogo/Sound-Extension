@@ -1,5 +1,7 @@
 package org.nlogo.extensions.sound;
 
+import org.nlogo.core.SyntaxJ;
+
 /**
  * NetLogo command stops a single note.
  */
@@ -15,7 +17,7 @@ public class StopNote
             org.nlogo.core.Syntax.StringType(),
             org.nlogo.core.Syntax.NumberType()
         };
-    return org.nlogo.core.Syntax.commandSyntax(right);
+    return SyntaxJ.commandSyntax(right);
   }
 
   public boolean getSwitchesBoolean() {

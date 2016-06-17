@@ -1,5 +1,7 @@
 package org.nlogo.extensions.sound;
 
+import org.nlogo.core.SyntaxJ;
+
 /**
  * NetLogo command stops all notes played by an instrument.
  */
@@ -11,7 +13,7 @@ public class StopInstrument
 
   public org.nlogo.core.Syntax getSyntax() {
     int[] right = {org.nlogo.core.Syntax.StringType()};
-    return org.nlogo.core.Syntax.commandSyntax(right);
+    return SyntaxJ.commandSyntax(right);
   }
 
   public boolean getSwitchesBoolean() {

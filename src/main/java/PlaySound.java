@@ -1,6 +1,7 @@
 package org.nlogo.extensions.sound;
 
 import java.net.URL;
+import org.nlogo.core.SyntaxJ;
 
 /**
  * NetLogo command plays a sound file
@@ -16,7 +17,7 @@ public class PlaySound
         {
             org.nlogo.core.Syntax.StringType(),
         };
-    return org.nlogo.core.Syntax.commandSyntax(right);
+    return SyntaxJ.commandSyntax(right);
   }
 
   public boolean getSwitchesBoolean() {

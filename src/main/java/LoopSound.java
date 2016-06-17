@@ -1,6 +1,7 @@
 package org.nlogo.extensions.sound;
 
 import java.net.URL;
+import org.nlogo.core.SyntaxJ;
 
 /**
  * NetLogo command loops a sound file
@@ -12,11 +13,10 @@ public class LoopSound
   }
 
   public org.nlogo.core.Syntax getSyntax() {
-    int[] right =
-        {
-            org.nlogo.core.Syntax.StringType(),
-        };
-    return org.nlogo.core.Syntax.commandSyntax(right);
+    int[] right = {
+      org.nlogo.core.Syntax.StringType(),
+    };
+    return org.nlogo.core.SyntaxJ.commandSyntax(right);
   }
 
   public boolean getSwitchesBoolean() {

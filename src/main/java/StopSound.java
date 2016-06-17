@@ -1,5 +1,6 @@
 package org.nlogo.extensions.sound;
 
+import org.nlogo.core.SyntaxJ;
 /**
  * NetLogo command loops a sound file
  */
@@ -12,7 +13,7 @@ public class StopSound
   public org.nlogo.core.Syntax getSyntax() {
     int[] right =
         {};
-    return org.nlogo.core.Syntax.commandSyntax(right);
+    return SyntaxJ.commandSyntax(right);
   }
 
   public boolean getSwitchesBoolean() {
