@@ -1,4 +1,6 @@
-enablePlugins(org.nlogo.build.NetLogoExtension)
+scalaVersion := "2.11.7"
+
+enablePlugins(org.nlogo.build.NetLogoExtension, org.nlogo.build.ExtensionDocumentationPlugin)
 
 name := "sound"
 
