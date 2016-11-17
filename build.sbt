@@ -1,4 +1,4 @@
-scalaVersion := "2.11.7"
+scalaVersion := "2.12.0"
 
 enablePlugins(org.nlogo.build.NetLogoExtension, org.nlogo.build.ExtensionDocumentationPlugin)
 
