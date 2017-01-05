@@ -14,4 +14,4 @@ javaSource in Compile := baseDirectory.value / "src" / "main" / "java"
 javacOptions ++= Seq("-g", "-Xlint:deprecation", "-Xlint:all", "-Xlint:-serial", "-Xlint:-path",
   "-encoding", "us-ascii")
 
-netLogoVersion := "6.0.0-BETA2"
+netLogoVersion := "6.0.0"
