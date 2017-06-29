@@ -38,7 +38,7 @@ under Code Examples in the NetLogo Models Library.
 ### MIDI support
 
 The MIDI part of the extension simulates a 128-key electronic
-keyboard with [47 drums](#drumnames) and [128 melodic instruments](#instrumentnames), as provided by
+keyboard with [47 drums](#drum-names) and [128 melodic instruments](#instrument-names), as provided by
 <a href="http://www.midi.org/about-midi/gm/gm1_spec.shtml" target="_blank">General
 MIDI Level 1 specification</a>.
 
@@ -72,7 +72,7 @@ sound:drums
 ```
 
 
-Reports a list of the names of the [47 drums](#drumnames)
+Reports a list of the names of the [47 drums](#drum-names)
 for use with `sound:play-drum`.
 
 
@@ -84,7 +84,7 @@ sound:instruments
 ```
 
 
-Reports a list of the names of the [128 instruments](#instrumentnames)
+Reports a list of the names of the [128 instruments](#instrument-names)
 for use with `sound:play-note`, `sound:play-note-later`,
 `sound:start-note` and `sound:stop-note`.
 
