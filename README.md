@@ -39,7 +39,7 @@ under Code Examples in the NetLogo Models Library.
 
 The MIDI part of the extension simulates a 128-key electronic
 keyboard with [47 drums](#drum-names) and [128 melodic instruments](#instrument-names), as provided by
-<a href="http://www.midi.org/about-midi/gm/gm1_spec.shtml" target="_blank">General
+<a href="https://www.midi.org/about-midi/gm/gm1_spec.shtml" target="_blank">General
 MIDI Level 1 specification</a>.
 
 It supports 15 polyphonic instrument channels and a single percussion
