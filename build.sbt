@@ -4,6 +4,8 @@ enablePlugins(org.nlogo.build.NetLogoExtension, org.nlogo.build.ExtensionDocumen
 
 name := "sound"
 
+version := "1.1.0"
+
 netLogoClassManager := "org.nlogo.extensions.sound.SoundExtension"
 
 netLogoTarget :=
