@@ -40,7 +40,7 @@ public class PlaySound
       } catch (java.net.MalformedURLException ex) {
         soundFile = new File(soundpath);
       }
-      SoundExtension.PlaySound(soundFile);
+      SoundExtension.playSound(soundFile);
 
     } catch (java.net.MalformedURLException ex) {
       throw new org.nlogo.api.ExtensionException

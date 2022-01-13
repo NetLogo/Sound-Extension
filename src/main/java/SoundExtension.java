@@ -331,11 +331,7 @@ public class SoundExtension extends org.nlogo.api.DefaultClassManager {
   	}
 
     public void run() {
-      try {
-        play();
-      } catch (InterruptedException e) {
-        org.nlogo.api.Exceptions.ignore(e);
-      }
+      play();
     }
   }
 
