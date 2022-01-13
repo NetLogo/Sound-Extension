@@ -1,6 +1,6 @@
 package org.nlogo.extensions.sound;
 
-import java.net.URL;
+import java.io.File;
 import org.nlogo.core.SyntaxJ;
 
 /**
@@ -33,15 +33,16 @@ public class PlaySoundAndWait
       throws org.nlogo.api.ExtensionException, org.nlogo.api.LogoException {
     try {
       String soundpath = args[0].getString();
-      URL soundurl;
+      File soundFile;
       soundpath = context.attachCurrentDirectory(soundpath);
 
       try {
-        soundurl = new URL(context.attachCurrentDirectory(soundpath));
+        soundFile = new File(context.attachCurrentDirectory(soundpath));
       } catch (java.net.MalformedURLException ex) {
-        soundurl = new URL("file", "", soundpath);
+        soundFile = new File(soundpath);
       }
-      SoundExtension.playSoundAndWait(soundurl);
+      SoundExtension.playSoundAndWait(soundFile);
+
     } catch (java.net.MalformedURLException ex) {
       throw new org.nlogo.api.ExtensionException
           ("Unable to open sound sample: " + ex.getMessage());

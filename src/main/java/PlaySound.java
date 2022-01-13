@@ -1,6 +1,6 @@
 package org.nlogo.extensions.sound;
 
-import java.net.URL;
+import java.io.File;
 import org.nlogo.core.SyntaxJ;
 
 /**
@@ -28,21 +28,19 @@ public class PlaySound
     return new PlaySound();
   }
 
-
   public void perform(org.nlogo.api.Argument args[], org.nlogo.api.Context context)
       throws org.nlogo.api.ExtensionException, org.nlogo.api.LogoException {
     try {
       String soundpath = args[0].getString();
-      URL soundurl;
+      File soundFile;
       soundpath = context.attachCurrentDirectory(soundpath);
 
       try {
-        soundurl = new URL(context.attachCurrentDirectory(soundpath));
+        soundFile = new File(context.attachCurrentDirectory(soundpath));
       } catch (java.net.MalformedURLException ex) {
-        soundurl = new URL("file", "", soundpath);
+        soundFile = new File(soundpath);
       }
-
-      SoundExtension.playSound(soundurl);
+      SoundExtension.PlaySound(soundFile);
 
     } catch (java.net.MalformedURLException ex) {
       throw new org.nlogo.api.ExtensionException

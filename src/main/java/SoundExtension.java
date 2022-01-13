@@ -1,6 +1,17 @@
 package org.nlogo.extensions.sound;
 
-import java.net.URL;
+import java.io.File;
+import java.io.IOException;
+
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineEvent;
+import javax.sound.sampled.LineListener;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import org.nlogo.api.ExtensionManager;
 
@@ -243,64 +254,126 @@ public class SoundExtension extends org.nlogo.api.DefaultClassManager {
    * Starts a sample after a specified duration
    */
 
-  private static class PlaySoundThread extends Thread {
-    private javax.sound.midi.MidiChannel channel;
-    private URL soundurl;
+  private static class PlaySoundThread extends Thread implements LineListener {
+    private File soundFile;
     private int delay;
+    /**
+  	 * Used by methods play and update to check whether playback has completed.
+  	 */
+  	boolean playbackCompleted;
 
-    PlaySoundThread(URL soundurl) {
+    PlaySoundThread(File soundFile) {
       super("PlaySoundThread");
-      this.soundurl = soundurl;
+      this.soundFile = soundFile;
       this.delay = 0;
     }
 
-    PlaySoundThread(URL soundurl, int delay) {
+    PlaySoundThread(File soundFile, int delay) {
       super("PlaySoundThread");
-      this.soundurl = soundurl;
+      this.soundFile = soundFile;
       this.delay = delay;
     }
 
+    /**
+  	 * Play the audio file PlaySoundThread.soundFile, with delay
+     * PlaySoundThread.delay before starting
+  	 */
+  	void play() {
+      Clip audioClip = null;
+  		try {
+  			AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundFile);
+  			AudioFormat format = audioStream.getFormat();
+  			DataLine.Info info = new DataLine.Info(Clip.class, format);
+  			audioClip = (Clip) AudioSystem.getLine(info);
+  			audioClip.addLineListener(this);
+
+  			audioClip.open(audioStream);
+
+        if (delay > 0) {
+          try {
+            Thread.sleep(delay);
+          } catch (InterruptedException e) {
+              org.nlogo.api.Exceptions.ignore(e);
+          }
+        }
+
+        audioClip.start();
+
+  			while (!playbackCompleted) {
+  				try {
+  					Thread.sleep(1000);
+  				} catch (InterruptedException e) {
+  					org.nlogo.api.Exceptions.ignore(e);
+  				}
+  			}
+  		} catch (UnsupportedAudioFileException e) {
+          org.nlogo.api.Exceptions.ignore(e);
+  		} catch (LineUnavailableException e) {
+          org.nlogo.api.Exceptions.ignore(e);
+  		} catch (IOException e) {
+          org.nlogo.api.Exceptions.ignore(e);
+  		} finally {
+        if (audioClip != null) {
+          audioClip.close();
+        }
+      }
+  	}
+
+    /**
+  	 * Listens to the the audio line events and detects when play is over.
+  	 */
+  	@Override
+  	public void update(LineEvent event) {
+  		LineEvent.Type type = event.getType();
+      if (type == LineEvent.Type.STOP) {
+  			playbackCompleted = true;
+  		}
+  	}
+
     public void run() {
       try {
-        java.applet.AudioClip clip =
-            java.applet.Applet.newAudioClip(soundurl);
-        Thread.sleep(delay);
-        clip.play();
+        play();
       } catch (InterruptedException e) {
         org.nlogo.api.Exceptions.ignore(e);
       }
-
     }
   }
 
-
-  static void playSound(URL url)
+  static void playSound(File file)
       throws org.nlogo.api.ExtensionException {
-    new PlaySoundThread(url).start();
+    new PlaySoundThread(file).start();
   }
 
-
-  static void playSoundLater(URL url, int delay)
+  static void playSoundLater(File file, int delay)
       throws org.nlogo.api.ExtensionException {
-    new PlaySoundThread(url, delay).start();
+    new PlaySoundThread(file, delay).start();
   }
 
-
-  static void playSoundAndWait(URL url)
+  static void playSoundAndWait(File file)
       throws org.nlogo.api.ExtensionException {
-    java.applet.AudioClip clip =
-        java.applet.Applet.newAudioClip(url);
-    clip.play();
+        PlaySoundThread playSoundThread = new PlaySoundThread(file);
+        playSoundThread.play();
   }
 
-  static java.applet.AudioClip currentClip = null;
+  static Clip currentClip = null;
 
-  static void loopSound(URL url)
+  static void loopSound(File file)
       throws org.nlogo.api.ExtensionException {
-    currentClip =
-        java.applet.Applet.newAudioClip(url);
-    currentClip.loop();
-  }
+        try {
+          AudioInputStream audioInputStream =
+          AudioSystem.getAudioInputStream(file);
+          currentClip = AudioSystem.getClip();
+
+          currentClip.open(audioInputStream);
+          currentClip.loop(Clip.LOOP_CONTINUOUSLY);
+        } catch (UnsupportedAudioFileException e) {
+          org.nlogo.api.Exceptions.ignore(e);
+        } catch (LineUnavailableException e) {
+          org.nlogo.api.Exceptions.ignore(e);
+        } catch (IOException e) {
+          org.nlogo.api.Exceptions.ignore(e);
+        }
+      }
 
   static void stopSound()
       throws org.nlogo.api.ExtensionException {

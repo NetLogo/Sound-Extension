@@ -1,6 +1,6 @@
 package org.nlogo.extensions.sound;
 
-import java.net.URL;
+import java.io.File;
 import org.nlogo.core.SyntaxJ;
 
 /**
@@ -15,7 +15,7 @@ public class PlaySoundLater
   public org.nlogo.core.Syntax getSyntax() {
     int[] right =
         {
-            org.nlogo.core.Syntax.StringType(), // sample URL
+            org.nlogo.core.Syntax.StringType(), // sample File path
             org.nlogo.core.Syntax.NumberType(), // delay
         };
     return SyntaxJ.commandSyntax(right);
@@ -35,15 +35,15 @@ public class PlaySoundLater
     try {
       String soundpath = args[0].getString();
       int delay = Math.round((float) args[1].getDoubleValue() * (float) 1000.0);
-      URL soundurl;
+      File soundFile;
       soundpath = context.attachCurrentDirectory(soundpath);
 
       try {
-        soundurl = new URL(context.attachCurrentDirectory(soundpath));
+        soundFile = new File(context.attachCurrentDirectory(soundpath));
       } catch (java.net.MalformedURLException ex) {
-        soundurl = new URL("file", "", soundpath);
+        soundFile = new File(soundpath);
       }
-      SoundExtension.playSoundLater(soundurl, delay);
+      SoundExtension.playSoundLater(soundFile, delay);
 
     } catch (java.net.MalformedURLException ex) {
       throw new org.nlogo.api.ExtensionException
