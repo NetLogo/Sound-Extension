@@ -10,4 +10,4 @@ netLogoVersion := "6.2.2"
 netLogoClassManager := "org.nlogo.extensions.sound.SoundExtension"
 
 javaSource in Compile := baseDirectory.value / "src" / "main" / "java"
-javacOptions ++= Seq("-g", "-Xlint:deprecation", "-Xlint:all", "-Xlint:-serial", "-Xlint:-path", "-encoding", "us-ascii")
+javacOptions ++= Seq("-g", "-Xlint:deprecation", "-Xlint:all", "-Xlint:-serial", "-Xlint:-path", "-encoding", "us-ascii", "--release", "11")
