@@ -6,7 +6,7 @@ name := "sound"
 version := "1.1.1"
 isSnapshot := true
 
-netLogoVersion := "6.3.0"
+netLogoVersion := "7.0.0-internal1-df97144"
 netLogoClassManager := "org.nlogo.extensions.sound.SoundExtension"
 
 Compile / javaSource := baseDirectory.value / "src" / "main" / "java"
