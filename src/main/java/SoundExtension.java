@@ -3,6 +3,7 @@ package org.nlogo.extensions.sound;
 import java.io.File;
 import java.io.IOException;
 
+import javax.sound.midi.MidiUnavailableException;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -13,9 +14,11 @@ import javax.sound.sampled.LineListener;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import org.nlogo.api.ExtensionException;
 import org.nlogo.api.ExtensionManager;
 
 public class SoundExtension extends org.nlogo.api.DefaultClassManager {
+  private boolean isHeadless = true;
 
   /**
    * Names of the drums. <p>
@@ -124,41 +127,44 @@ public class SoundExtension extends org.nlogo.api.DefaultClassManager {
    */
   public void runOnce(org.nlogo.api.ExtensionManager em)
       throws org.nlogo.api.ExtensionException {
-    try {
+    isHeadless = !em.workspaceContext().workspaceGUI();
 
-      // Open a synthesizer
-      synth = javax.sound.midi.MidiSystem.getSynthesizer();
-      synth.open();
+    if (!isHeadless) {
+      try {
+        // Open a synthesizer
+        synth = javax.sound.midi.MidiSystem.getSynthesizer();
+        synth.open();
 
-      // Get array of synth channels
-      channels = synth.getChannels();
-      // initializing channels to 0 to fix bug #1027
-      // channels have program=0 to begin with, but this additional initialization
-      // seems to make them work properly for instrument 0 (acoustic grand piano)
-      // when they arent initialized like this, then when inst 0 is used
-      // the channel plays the wrong instrument.
-      // maybe someday we can figure out why, but for now this is sufficient. -JC 7/2/10
-      for (javax.sound.midi.MidiChannel ch : channels) {
-        ch.programChange(0);
-      }
-
-      javax.sound.midi.Soundbank soundbank = synth.getDefaultSoundbank();
-
-      if (soundbank == null) {
-        try {
-          java.io.InputStream soundbankStream = getClass().getClassLoader().getResourceAsStream("soundbank-min.gm");
-          java.io.BufferedInputStream bufferedSoundbankStream = new java.io.BufferedInputStream(soundbankStream);
-          soundbank = javax.sound.midi.MidiSystem.getSoundbank(bufferedSoundbankStream);
-        } catch (java.io.IOException e) {
-          throw new org.nlogo.api.ExtensionException("Failed to load soundbank: " + e.toString());
-        } catch (javax.sound.midi.InvalidMidiDataException e) {
-          throw new org.nlogo.api.ExtensionException("Failed to load soundbank: " + e.toString());
+        // Get array of synth channels
+        channels = synth.getChannels();
+        // initializing channels to 0 to fix bug #1027
+        // channels have program=0 to begin with, but this additional initialization
+        // seems to make them work properly for instrument 0 (acoustic grand piano)
+        // when they arent initialized like this, then when inst 0 is used
+        // the channel plays the wrong instrument.
+        // maybe someday we can figure out why, but for now this is sufficient. -JC 7/2/10
+        for (javax.sound.midi.MidiChannel ch : channels) {
+          ch.programChange(0);
         }
-      }
 
-      boolean loaded = synth.loadAllInstruments(soundbank);
-    } catch (javax.sound.midi.MidiUnavailableException ex) {
-      throw new org.nlogo.api.ExtensionException("MIDI is not available");
+        javax.sound.midi.Soundbank soundbank = synth.getDefaultSoundbank();
+
+        if (soundbank == null) {
+          try {
+            java.io.InputStream soundbankStream = getClass().getClassLoader().getResourceAsStream("soundbank-min.gm");
+            java.io.BufferedInputStream bufferedSoundbankStream = new java.io.BufferedInputStream(soundbankStream);
+            soundbank = javax.sound.midi.MidiSystem.getSoundbank(bufferedSoundbankStream);
+          } catch (java.io.IOException e) {
+            throw new org.nlogo.api.ExtensionException("Failed to load soundbank: " + e.toString());
+          } catch (javax.sound.midi.InvalidMidiDataException e) {
+            throw new org.nlogo.api.ExtensionException("Failed to load soundbank: " + e.toString());
+          }
+        }
+
+        boolean loaded = synth.loadAllInstruments(soundbank);
+      } catch (MidiUnavailableException ex) {
+        throw new ExtensionException("MIDI is not available.");
+      }
     }
   }
 
@@ -177,7 +183,10 @@ public class SoundExtension extends org.nlogo.api.DefaultClassManager {
    */
   static void startNote(int instrument, int note, int velocity) {
     javax.sound.midi.MidiChannel channel = ensureChannel(instrument);
-    channel.noteOn(note, velocity);
+
+    if (channel != null) {
+      channel.noteOn(note, velocity);
+    }
   }
 
   /**
@@ -210,8 +219,10 @@ public class SoundExtension extends org.nlogo.api.DefaultClassManager {
    * Stops all notes.
    */
   static void stopNotes() {
-    // the api says stop messages are recevied by all channels
-    channels[0].allNotesOff();
+    if (channels != null && channels.length > 0) {
+      // the api says stop messages are recevied by all channels
+      channels[0].allNotesOff();
+    }
   }
 
   /**
@@ -224,19 +235,24 @@ public class SoundExtension extends org.nlogo.api.DefaultClassManager {
    */
   static void playNote(int instrument, int note, int velocity, int duration) {
     javax.sound.midi.MidiChannel channel = ensureChannel(instrument);
-    channel.noteOn(note, velocity);
 
-    // start the stop thread
-    if (duration > -1) {
-      (new StopNoteThread(channel, note, duration)).start();
+    if (channel != null) {
+      channel.noteOn(note, velocity);
+
+      // start the stop thread
+      if (duration > -1) {
+        (new StopNoteThread(channel, note, duration)).start();
+      }
     }
   }
 
 
   static void playNoteLater(int instrument, int note, int velocity, int duration, int delay) {
     javax.sound.midi.MidiChannel channel = ensureChannel(instrument);
-    new PlayNoteThread(channel, note, velocity, duration, delay)
-        .start();
+
+    if (channel != null) {
+      new PlayNoteThread(channel, note, velocity, duration, delay).start();
+    }
   }
 
   /**
@@ -246,7 +262,9 @@ public class SoundExtension extends org.nlogo.api.DefaultClassManager {
    * @param velocity the speed at which the drum was hit, from 0 to 128
    */
   static void playDrum(int drum, int velocity) {
-    channels[PERCUSSION_CHANNEL].noteOn(drum, velocity);
+    if (channels != null && channels.length > 0) {
+      channels[PERCUSSION_CHANNEL].noteOn(drum, velocity);
+    }
   }
 
 
@@ -424,6 +442,10 @@ public class SoundExtension extends org.nlogo.api.DefaultClassManager {
    * Debugging output shows channel allocations.
    */
   static String dump() {
+    if (channels == null) {
+      return "";
+    }
+
     StringBuilder s = new StringBuilder();
 
     for (int j = 0; j < channels.length; j++) {
@@ -447,6 +469,10 @@ public class SoundExtension extends org.nlogo.api.DefaultClassManager {
    * -1 if no channel is playing it.
    */
   private static javax.sound.midi.MidiChannel getChannel(int instrument) {
+    if (channels == null) {
+      return null;
+    }
+
     for (int j = 0; j < channels.length; j++) {
       if (j != PERCUSSION_CHANNEL && channels[j].getProgram() == instrument) {
         return channels[j];
@@ -462,7 +488,7 @@ public class SoundExtension extends org.nlogo.api.DefaultClassManager {
   private static javax.sound.midi.MidiChannel ensureChannel(int instrument) {
     javax.sound.midi.MidiChannel channel = getChannel(instrument);
 
-    if (channel != null) {
+    if (channel != null || channels == null || channels.length == 0) {
       return channel;
     }
 
