@@ -258,9 +258,9 @@ public class SoundExtension extends org.nlogo.api.DefaultClassManager {
     private File soundFile;
     private int delay;
     /**
-  	 * Used by methods play and update to check whether playback has completed.
-  	 */
-  	boolean playbackCompleted;
+     * Used by methods play and update to check whether playback has completed.
+     */
+    boolean playbackCompleted;
 
     PlaySoundThread(File soundFile) {
       super("PlaySoundThread");
@@ -275,19 +275,19 @@ public class SoundExtension extends org.nlogo.api.DefaultClassManager {
     }
 
     /**
-  	 * Play the audio file PlaySoundThread.soundFile, with delay
+     * Play the audio file PlaySoundThread.soundFile, with delay
      * PlaySoundThread.delay before starting
-  	 */
-  	void play() {
+     */
+    void play() {
       Clip audioClip = null;
-  		try {
-  			AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundFile);
-  			AudioFormat format = audioStream.getFormat();
-  			DataLine.Info info = new DataLine.Info(Clip.class, format);
-  			audioClip = (Clip) AudioSystem.getLine(info);
-  			audioClip.addLineListener(this);
+      try {
+        AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundFile);
+        AudioFormat format = audioStream.getFormat();
+        DataLine.Info info = new DataLine.Info(Clip.class, format);
+        audioClip = (Clip) AudioSystem.getLine(info);
+        audioClip.addLineListener(this);
 
-  			audioClip.open(audioStream);
+        audioClip.open(audioStream);
 
         if (delay > 0) {
           try {
@@ -299,36 +299,36 @@ public class SoundExtension extends org.nlogo.api.DefaultClassManager {
 
         audioClip.start();
 
-  			while (!playbackCompleted) {
-  				try {
-  					Thread.sleep(1000);
-  				} catch (InterruptedException e) {
-  					org.nlogo.api.Exceptions.ignore(e);
-  				}
-  			}
-  		} catch (UnsupportedAudioFileException e) {
+        while (!playbackCompleted) {
+          try {
+            Thread.sleep(1000);
+          } catch (InterruptedException e) {
+            org.nlogo.api.Exceptions.ignore(e);
+          }
+        }
+      } catch (UnsupportedAudioFileException e) {
           org.nlogo.api.Exceptions.ignore(e);
-  		} catch (LineUnavailableException e) {
+      } catch (LineUnavailableException e) {
           org.nlogo.api.Exceptions.ignore(e);
-  		} catch (IOException e) {
+      } catch (IOException e) {
           org.nlogo.api.Exceptions.ignore(e);
-  		} finally {
+      } finally {
         if (audioClip != null) {
           audioClip.close();
         }
       }
-  	}
+    }
 
     /**
-  	 * Listens to the the audio line events and detects when play is over.
-  	 */
-  	@Override
-  	public void update(LineEvent event) {
-  		LineEvent.Type type = event.getType();
+     * Listens to the the audio line events and detects when play is over.
+     */
+    @Override
+    public void update(LineEvent event) {
+      LineEvent.Type type = event.getType();
       if (type == LineEvent.Type.STOP) {
-  			playbackCompleted = true;
-  		}
-  	}
+        playbackCompleted = true;
+      }
+    }
 
     public void run() {
       play();
