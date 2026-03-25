@@ -3,7 +3,7 @@ import org.nlogo.build.{ NetLogoExtension, ExtensionDocumentationPlugin }
 enablePlugins(NetLogoExtension, ExtensionDocumentationPlugin)
 
 name := "sound"
-version := "1.2.1"
+version := "1.2.2"
 isSnapshot := true
 
 scalaVersion := "3.7.0"
